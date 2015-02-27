@@ -51,37 +51,25 @@
 }
 
 - (void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
-    
+    NSLog(@"Collision began");
     UIView* view = (UIView*)item;
-    view.backgroundColor = [UIColor yellowColor];
+    view.backgroundColor = [UIColor greenColor];
     [UIView animateWithDuration:0.3
                      animations:^{
-        view.backgroundColor = [UIColor grayColor];
-    }];
-    
-    if (!_firstContact)
-    {
-        _firstContact = YES;
-        
-        UIView* square = [[UIView alloc] initWithFrame:CGRectMake(30, 0, 100, 100)];
-        square.backgroundColor = [UIColor grayColor];
-        [self.view addSubview:square];
-        
-        [_collision addItem:square];
-        [_gravity addItem:square];
-        
-        UIPushBehavior* push = [[UIPushBehavior alloc] initWithItems:@[view] mode:UIPushBehaviorModeInstantaneous];
-        [push setAngle:-M_PI/2 magnitude:8.0f];
-        [_animator addBehavior:push];
-        
-        UIAttachmentBehavior* attach = [[UIAttachmentBehavior alloc] initWithItem:view attachedToItem:square];
-        [_animator addBehavior:attach];
-    }
-    
-    
+                         view.backgroundColor = [UIColor grayColor];
+                     }];
 }
 
 
+- (void)collisionBehavior:(UICollisionBehavior *)behavior endedContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p {
+    NSLog(@"Collision ended");
+    UIView* view = (UIView*)item;
+    view.backgroundColor = [UIColor redColor];
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         view.backgroundColor = [UIColor grayColor];
+                     }];
+}
 
 - (void)didReceiveMemoryWarning
 {
